@@ -45,10 +45,8 @@ public class Basket {
 
     }
 
-    public double calculateTotalPrice() {
-        return productList.stream ()
-                .map (product -> quantityList.get (product) * product.returnPrice ())
-                .reduce (0.0, Double::sum);
+    public Map<Product,Integer> returnListOfQuantities() {
+        return new HashMap<> (quantityList);
     }
 }
 
