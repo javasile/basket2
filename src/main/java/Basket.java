@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import ExceptionList.QuantityError;
 
 public class Basket {
 
@@ -14,7 +15,10 @@ public class Basket {
         quantityList = new HashMap<> ();
     }
 
-    public void addProduct(Product product, int quantity) {
+    public Basket addProduct(Product product, int quantity) throws QuantityError {
+        if (checkQuantity (quantity)){
+            throw new QuantityError ("Invalid quantity");
+        }
         if (hasProduct (product)) {
             int prevoiusValue = quantityList.get (product);
             quantityList.replace (product, prevoiusValue + quantity);
@@ -22,18 +26,24 @@ public class Basket {
             productList.add (product);
             quantityList.put (product, quantity);
         }
+        return this;
     }
 
-    public void removeProduct(Product product, int quantity) {
+    private boolean checkQuantity(int quantity){
+        return quantity < 1;
+    }
+
+    public Basket removeProduct(Product product, int quantity) {
         if (hasProduct (product)) {
             int newValue = quantityList.get (product) - quantity;
-            if (newValue > 1) {
+            if (newValue > 0) {
                 quantityList.replace (product, newValue);
             } else {
                 quantityList.remove (product);
                 productList.remove (product);
             }
         }
+        return this;
     }
 
     public List<Product> getItems() {
@@ -48,6 +58,8 @@ public class Basket {
     public Map<Product,Integer> returnListOfQuantities() {
         return new HashMap<> (quantityList);
     }
+
+
 }
 
 

@@ -12,17 +12,27 @@ public class GenericProduct implements Product {
 
 
     @Override
-    public void createProduct(String name, int id, Supplier supplier) {
+    public Product createProduct(String name, int id, Supplier supplier) {
         this.name = name;
         this.id = id;
         this.supplier = supplier;
+        return this;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getId() {
+        return id;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass () != o.getClass ()) return false;
-        GenericProduct that = (GenericProduct) o;
+        if (!(o instanceof GenericProduct that)) return false;
         return id == that.id;
     }
 
